@@ -99,7 +99,7 @@ class LugarSummary extends StatelessWidget {
                             icon: new Icon(Icons.speaker), onPressed: null),
                         new IconButton(
                             icon: new Icon(Icons.map), onPressed: null),
-                        new IconButton(
+                        new IconButton( 
                             icon: new Icon(Icons.favorite), onPressed: null)
                       ],
                     ),
