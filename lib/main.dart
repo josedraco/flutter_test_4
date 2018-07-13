@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_test_4/lugares.dart';
 
 void main() => runApp(new MiMaterialApp());
 
@@ -16,11 +17,9 @@ class MiMaterialApp extends StatelessWidget {
   }
 
   ListView buildListView() {
-    return ListView(
-            children: <Widget>[
-              buildCard_1(),
-              buildCard_2(),
-              ],
+    return ListView.builder(
+        itemBuilder: (context, index) => new LugarSummary(lugares[index]),
+        itemCount: lugares.length,
           );
   }
 
@@ -44,7 +43,19 @@ class MiMaterialApp extends StatelessWidget {
           ]);
   }
 
-  Card buildCard_1(){
+}
+
+
+class LugarSummary extends StatelessWidget {
+  final Lugar lugar;
+  final bool horizontal;
+
+  LugarSummary(this.lugar, {this.horizontal = true});
+
+  LugarSummary.vertical(this.lugar) : horizontal = false;
+
+
+  Widget buildCard(String name, String imag, String desc){
     return new Card(
         color: Colors.yellowAccent,
         shape: const RoundedRectangleBorder(borderRadius: const BorderRadius.all(const Radius.circular(44.0))),
@@ -61,7 +72,7 @@ class MiMaterialApp extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  new Text("Titulo",style: new TextStyle(fontSize: 23.0, color: Colors.lightGreen),textAlign: TextAlign.center, ),
+                  new Text(name,style: new TextStyle(fontSize: 23.0, color: Colors.lightGreen),textAlign: TextAlign.center, ),
                 ],
               ),
             ),
@@ -71,7 +82,7 @@ class MiMaterialApp extends StatelessWidget {
               child: new Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    new Image.asset("assets/img/balsera_1.jpg"),
+                    new Image.asset(imag),
                   ]
 
               ),
@@ -102,7 +113,7 @@ class MiMaterialApp extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
-                    new Text("Descripcion"),
+                    new Text(desc, maxLines: 1,overflow: TextOverflow.fade),
                   ],
                 )
             )
@@ -111,72 +122,10 @@ class MiMaterialApp extends StatelessWidget {
     );
   }
 
-  Card buildCard_2(){
-    return new Card(
-        color: Colors.yellowAccent,
-        shape: const RoundedRectangleBorder(borderRadius: const BorderRadius.all(const Radius.circular(44.0))),
-        child:  new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //new HomePageBody(),
-            new Container(
-              color: Colors.purple,
-              alignment: Alignment.center,
-              padding: EdgeInsets.all(4.0),
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  new Text("Titulo",style: new TextStyle(fontSize: 23.0, color: Colors.lightGreen),textAlign: TextAlign.center, ),
-                ],
-              ),
-            ),
-            new Divider(color: Colors.red,),
-            new Container(
-              color: Colors.lightGreen,
-              child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    new Image.asset("assets/img/camposagrado_1.jpg"),
-                  ]
+  @override
+  Widget build(BuildContext context) {
 
-              ),
-            ),
-            new Container(
-              color: Colors.lightBlue,
-              child: new Column(
-                  children: <Widget>[
-                    new Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        new IconButton(
-                            icon: new Icon(Icons.speaker), onPressed: null),
-                        new IconButton(
-                            icon: new Icon(Icons.map), onPressed: null),
-                        new IconButton(
-                            icon: new Icon(Icons.favorite), onPressed: null)
-                      ],
-                    ),
-                  ]
-              ),
-            ),
-            new Container(
-                color: Colors.red,
-                padding: EdgeInsets.all(10.0),
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    new Text("Descripcion"),
-                  ],
-                )
-            )
-          ],
-        )
-    );
+    return buildCard(this.lugar.name, this.lugar.image, this.lugar.description);
+
   }
-
-
 }
